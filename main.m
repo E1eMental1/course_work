@@ -1,13 +1,15 @@
 %Общая формула x = sqrt(p) * h * d + ksi
+
+for ro = -10:0.5:15
+p = 0.5 * 10 ^ (0.1 * ro);  %Мощность сигнала, и ее вероятнее всего придется менять
+
 counter = 0;
 miss_counter = 0;
 
-for i = 1:10000
+for i = 1:100000
 %Блок генерации случайного симовола, нахождение принятного символа,
 %определение ближайшего к принятому симовлу и их сравнение
 h = 1;  %Характеристика канала(ее пока положим равной единице)
-
-p = 4;  %Мощность сигнала, и ее вероятнее всего придется менять
 
 
 ksi = randn / sqrt(2) + 1i * randn / sqrt(2);    %комплексный шум(матожидания у обоих 0, а дисперсии 0,5
@@ -44,6 +46,16 @@ end
 counter = counter + 1;
 
 end
-ans = miss_counter/counter
 
 
+if (ro == -10)
+    errplot = miss_counter/counter;
+    roplot = ro;
+end
+errplot = [ errplot miss_counter/counter];
+roplot = [roplot ro];
+
+
+persent = (ro + 10) * 4
+end
+plot(roplot, errplot)
