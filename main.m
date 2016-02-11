@@ -1,10 +1,10 @@
 %Общая формула x = sqrt(p) * h * d + ksi
 
-for ro = -10:0.5:15
-p = 0.5 * 10 ^ (0.1 * ro);  %Мощность сигнала, и ее вероятнее всего придется менять
+for ro = -10:0.5:15 %ro - ОСШ в дб
+p = 0.5 * 10 ^ (0.1 * ro);  %Мощность сигнала, расчитываается из ОСШ а дб
 
 counter = 0;
-miss_counter = 0;
+miss_counter = 0;%величины для определения вероятности
 
 for i = 1:100000
 %Блок генерации случайного симовола, нахождение принятного символа,
@@ -47,7 +47,7 @@ counter = counter + 1;
 
 end
 
-
+%добавляем в массив значения вероятности в зависимости от ОСШ
 if (ro == -10)
     errplot = miss_counter/counter;
     roplot = ro;
@@ -56,6 +56,6 @@ errplot = [ errplot miss_counter/counter];
 roplot = [roplot ro];
 
 
-persent = (ro + 10) * 4
+persent = (ro + 10) * 4%добавил для показа хода выполнения
 end
 plot(roplot, errplot)
