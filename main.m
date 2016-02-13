@@ -1,6 +1,6 @@
 %Общая формула x = sqrt(p) * h * d + ksi
 
-for ro = -10:0.5:15 %ro - ОСШ в дб
+for ro = -10:0.5:20 %ro - ОСШ в дб
 p = 0.5 * 10 ^ (0.1 * ro);  %Мощность сигнала, расчитываается из ОСШ а дб
 
 counter = 0;
@@ -56,6 +56,9 @@ errplot = [ errplot miss_counter/counter];
 roplot = [roplot ro];
 
 
-persent = (ro + 10) * 4%добавил для показа хода выполнения
+persent = (ro + 10) * 100 / 30%добавил для показа хода выполнения
 end
-plot(roplot, errplot)
+%rot = 10 .^ (0.1 .* roplot) 
+%y = 3/4 .* Q(sqrt(rot ./ 5))+ 1/2 .* Q(3 .* sqrt(rot ./ 5)) - 1/4 .* Q(5 .* sqrt(rot ./ 5))
+semilogy(roplot, errplot, 'LineWidth', 2)
+grid on
