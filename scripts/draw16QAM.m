@@ -17,7 +17,7 @@ if( strcmp(type, '16-QAM') == 1)
 end
 
 romin = -10;
-romax = 20;
+romax = 35;
 for ro = romin:0.4:romax %ro - Œ—ÿ ‚ ‰·
     p = 10 ^ (0.1 * ro);
     BERcounter = 0;
