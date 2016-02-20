@@ -8,7 +8,7 @@ if( strcmp(type, 'BPSK') == 1)
 end
 
 if( strcmp(type, 'QPSK') == 1)
-    point = 2 * round((noisedPoint + 1 + 1i) / 2) - 1 - 1i;
+    point = (2 * round((noisedPoint * sqrt(2) + 1 + 1i) / 2) - 1 - 1i);
     
     r = real(point);
     if (r > 1)
@@ -23,11 +23,11 @@ if( strcmp(type, 'QPSK') == 1)
     elseif(im < -1)
         im = -1;
     end
-point = r + 1i * im;
+point = (r + 1i * im) / sqrt(2);
 end
 
 if( strcmp(type, '16-QAM') == 1)
-    point = 2 * round((noisedPoint + 3 + 3i) / 2) - 3 - 3i;
+    point = (2 * round((noisedPoint * sqrt(10) + 3 + 3i) / 2) - 3 - 3i);
     
     r = real(point);
     if (r > 3)
@@ -42,7 +42,7 @@ if( strcmp(type, '16-QAM') == 1)
     elseif(im < -3)
         im = -3;
     end
-point = r + 1i * im;
+point = (r + 1i * im) / sqrt(10);
 end
 
 end

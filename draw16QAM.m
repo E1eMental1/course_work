@@ -19,7 +19,7 @@ end
 romin = -10;
 romax = 20;
 for ro = romin:0.4:romax %ro - Œ—ÿ ‚ ‰·
-    p = 0.5 * 10 ^ (0.1 * ro);
+    p = 10 ^ (0.1 * ro);
     BERcounter = 0;
     missBERcounter = 0;
     SERcounter = 0;

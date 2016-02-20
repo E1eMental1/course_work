@@ -1,10 +1,10 @@
 n = 50000;
-type = '16-QAM';
+type = 'QPSK';
 
 
 roplot = zeros(0);  %для построения графика
-BERplot_16QAM = zeros(0);%
-SERplot_16QAM = zeros(0);%
+BERplot_QPSK = zeros(0);%
+SERplot_QPSK = zeros(0);%
 
 if( strcmp(type, 'BPSK') == 1)
     symbolLength = 1;
@@ -19,7 +19,7 @@ end
 romin = -10;
 romax = 20;
 for ro = romin:0.4:romax %ro - ОСШ в дб
-    p = 0.5 * 10 ^ (0.1 * ro);
+    p = 10 ^ (0.1 * ro);
     BERcounter = 0;
     missBERcounter = 0;
     SERcounter = 0;
@@ -44,8 +44,8 @@ for ro = romin:0.4:romax %ro - ОСШ в дб
     
     ro
     roplot = [roplot ro];
-    BERplot_16QAM = [BERplot_16QAM BER];
-    SERplot_16QAM = [SERplot_16QAM SER];
+    BERplot_QPSK = [BERplot_QPSK BER];
+    SERplot_QPSK = [SERplot_QPSK SER];
 end
-semilogy(roplot, BERplot_16QAM, roplot, SERplot_16QAM);
+semilogy(roplot, BERplot_QPSK, roplot, SERplot_QPSK);
 grid on;

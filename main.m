@@ -1,64 +1,28 @@
-%Общая формула x = sqrt(p) * h * d + ksi
+n = 100000;
+type = 'QPSK';
 
-for ro = -10:0.5:20 %ro - ОСШ в дб
-p = 0.5 * 10 ^ (0.1 * ro);  %Мощность сигнала, расчитываается из ОСШ а дб
-
-counter = 0;
-miss_counter = 0;%величины для определения вероятности
-
-for i = 1:100000
-%Блок генерации случайного симовола, нахождение принятного символа,
-%определение ближайшего к принятому симовлу и их сравнение
-h = 1;  %Характеристика канала(ее пока положим равной единице)
+roplot = zeros(0);  %для построения графика
+BERplot_QPSK = zeros(0);%
+SERplot_QPSK = zeros(0);%
 
 
-ksi = randn / sqrt(2) + 1i * randn / sqrt(2);    %комплексный шум(матожидания у обоих 0, а дисперсии 0,5
+romin = -10;
+romax = 20;
+for ro = romin:0.4:romax %ro - ОСШ в дб
+p = 10 ^ (0.1 * ro);
 
-d = ((randi(4) - 1) * 2 - 3) + 1i * ((randi(4) - 1) * 2 - 3);%Генерация случайного символа(в комплексном виде) для 16-КАМ
+inputSeq = creatingInputBitSequence(n);
 
-obtained_d = d + ksi / ( h * sqrt(p));%После добавления шума получаем этот символ(в комплексном виде)
+[outputSeq, resizedInputSeq] = creatingReceivedBitSequence(inputSeq, type, p);
 
-%Принимаем решение, какой это символ
+BER = findBER(resizedInputSeq, outputSeq);
 
-hypothesis_d = 2 * round((obtained_d + 3 + 3i) / 2) - 3 - 3i;
+roplot = [roplot ro]
+BERplot_QPSK = [BERplot_QPSK BER];
 
-r = real(hypothesis_d);
-if (r > 3)
-    r = 3;
-elseif(r < -3)
-    r = -3;
-end
-
-im = imag(hypothesis_d);
-if (im > 3)
-    im = 3;
-elseif(im < -3)
-    im = -3;
-end
-
-hypothesis_d = r + 1i * im;
-
-%сравниваем
-if (d ~= hypothesis_d)
-    miss_counter = miss_counter + 1;
-end
-
-counter = counter + 1;
+SER = findSER(resizedInputSeq, outputSeq, type);
+SERplot_QPSK = [SERplot_QPSK SER];
 
 end
-
-%добавляем в массив значения вероятности в зависимости от ОСШ
-if (ro == -10)
-    errplot = miss_counter/counter;
-    roplot = ro;
-end
-errplot = [ errplot miss_counter/counter];
-roplot = [roplot ro];
-
-
-persent = (ro + 10) * 100 / 30%добавил для показа хода выполнения
-end
-%rot = 10 .^ (0.1 .* roplot) 
-%y = 3/4 .* Q(sqrt(rot ./ 5))+ 1/2 .* Q(3 .* sqrt(rot ./ 5)) - 1/4 .* Q(5 .* sqrt(rot ./ 5))
-semilogy(roplot, errplot, 'LineWidth', 2)
-grid on
+semilogy(roplot, BERplot_QPSK, roplot, SERplot_QPSK);
+grid on;

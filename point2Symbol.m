@@ -8,6 +8,7 @@ if( strcmp(type, 'BPSK') == 1)
 end
 
 if( strcmp(type, 'QPSK') == 1)
+    point = point * sqrt(2);
     if(point == -1 - 1i) symbol = [0 0]; end
     if(point == -1 + 1i) symbol = [0 1]; end
     if(point == 1 - 1i) symbol = [1 0]; end
@@ -15,6 +16,7 @@ if( strcmp(type, 'QPSK') == 1)
 end
 
 if( strcmp(type, '16-QAM') == 1)
+    point = point * sqrt(10);
     r = real(point);
     i = imag(point);
     if(r < 0) a1 = 0; else a1 = 1; end
