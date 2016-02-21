@@ -1,4 +1,4 @@
-function [res, resizedInputBitSequence] = creatingReceivedBitSequence(inputBitSequence, type, p)
+function [res, resizedInputBitSequence] = creatingReceivedBitSequence(inputBitSequence, type, p, K)
 
 outputBitSequence = zeros(0);
 bitSequence = inputBitSequence;
@@ -6,7 +6,7 @@ bitSequence = inputBitSequence;
 [symbol, bitSequence] = fetchSymbol(bitSequence, type);
 while(symbol ~= -1)
     point = symbol2Point( symbol, type );%Получение точки из символа
-    noisedPoint = noise(point, p);%Добавление шума
+    noisedPoint = noise(point, p, K);%Добавление шума
     roundedPoint = pointRound(noisedPoint, type);%определение ближайшей точки
     obtainedSymbol = point2Symbol(roundedPoint, type);%Полученый символ
     

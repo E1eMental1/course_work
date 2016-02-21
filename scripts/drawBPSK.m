@@ -1,6 +1,7 @@
-n = 70000;
+n = 50000;
 type = 'BPSK';
-
+Kdb = 50;
+K = 10 ^ (0.1 * Kdb);
 
 roplot = zeros(0);  %для построения графика
 BERplot_BPSK = zeros(0);%
@@ -17,7 +18,7 @@ if( strcmp(type, '16-QAM') == 1)
 end
 
 romin = -10;
-romax = 35;
+romax = 20;
 for ro = romin:0.4:romax %ro - ОСШ в дб
     p = 10 ^ (0.1 * ro);
     BERcounter = 0;
@@ -27,7 +28,7 @@ for ro = romin:0.4:romax %ro - ОСШ в дб
     for i = 1:n
         symbol = randi(2, [1 symbolLength]) - 1;
         point = symbol2Point( symbol, type );
-        noisedPoint = noise(point, p);%Добавление шума
+        noisedPoint = noise(point, p, K);%Добавление шума
         roundedPoint = pointRound(noisedPoint, type);%определение ближайшей точки
         obtainedSymbol = point2Symbol(roundedPoint, type);%Полученый символ
         
@@ -48,4 +49,5 @@ for ro = romin:0.4:romax %ro - ОСШ в дб
     SERplot_BPSK = [SERplot_BPSK SER];
 end
 semilogy(roplot, BERplot_BPSK, roplot, SERplot_BPSK);
+axis([-10 35 (10 ^ -3) 1])
 grid on;

@@ -1,6 +1,7 @@
-n = 60000;
+n = 10000;
 type = 'QPSK';
-
+Kdb = -50;
+K = 10 ^ (0.1 * Kdb);
 
 roplot = zeros(0);  %для построения графика
 BERplot_QPSK = zeros(0);%
@@ -27,7 +28,7 @@ for ro = romin:0.4:romax %ro - ОСШ в дб
     for i = 1:n
         symbol = randi(2, [1 symbolLength]) - 1;
         point = symbol2Point( symbol, type );
-        noisedPoint = noise(point, p);%Добавление шума
+        noisedPoint = noise(point, p, K);%Добавление шума
         roundedPoint = pointRound(noisedPoint, type);%определение ближайшей точки
         obtainedSymbol = point2Symbol(roundedPoint, type);%Полученый символ
         

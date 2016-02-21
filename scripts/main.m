@@ -1,5 +1,7 @@
 n = 100000;
 type = 'QPSK';
+Kdb = -50;
+K = 10 ^ (0.1 * Kdb);
 
 roplot = zeros(0);  %для построения графика
 BERplot_QPSK = zeros(0);%
@@ -13,7 +15,7 @@ p = 10 ^ (0.1 * ro);
 
 inputSeq = creatingInputBitSequence(n);
 
-[outputSeq, resizedInputSeq] = creatingReceivedBitSequence(inputSeq, type, p);
+[outputSeq, resizedInputSeq] = creatingReceivedBitSequence(inputSeq, type, p, K);
 
 BER = findBER(resizedInputSeq, outputSeq);
 
