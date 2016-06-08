@@ -21,10 +21,10 @@ end
 
 data = randi( [0 1], numberOfSymbols * symbolLength, 1 );
 
-if(encode)
-    trellis = poly2trellis(7, [ 133 171 ]);
-    tbl = 1;
-    dataEnc = convenc(data,trellis);
+if(encode)                                  %Encoding block
+    trellis = poly2trellis(7, [ 133 171 ]); %Structure of convolutional coder
+    tbl = 32;
+    dataEnc = convenc(data,trellis);        %Encode data
 else
     dataEnc = data;
 end
@@ -37,8 +37,8 @@ receivedSignal = noise(modSignal, snr, Kfactor);
 
 receivedData = step(demodulator, receivedSignal);
 
-if(encode)
-    dataDec = vitdec(receivedData, trellis, tbl, 'cont', 'hard');
+if(encode)                                                          %Decoding block
+    dataDec = vitdec(receivedData, trellis, tbl, 'cont', 'hard');   %Decode data
     data = data(1:end-tbl);
     dataDec = dataDec(tbl+1:end);
 else
