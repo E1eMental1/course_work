@@ -25,8 +25,52 @@ if( strcmp(type, '16-QAM') == 1)
     point = r + 1i * i;
     point = point / sqrt(10);
 end
-    
-    
+if( strcmp(type, '64-QAM') == 1)
+    cr = 4*symbol(1) + 2*symbol(2) + symbol(3);
+    switch cr
+        case 0
+            r = -7;
+        case 1
+            r = -5;
+        case 2
+            r = -1;
+        case 3
+            r = -3;
+        case 4
+            r = 7;
+        case 5
+            r = 5;
+        case 6
+            r = 1;
+        case 7
+            r = 3;
+        otherwise
+            disp('other value')
+    end
+    ci = 4*symbol(4) + 2*symbol(5) + symbol(6);
+    switch ci
+        case 0
+            i = -7;
+        case 1
+            i = -5;
+        case 2
+            i = -1;
+        case 3
+            i = -3;
+        case 4
+            i = 7;
+        case 5
+            i = 5;
+        case 6
+            i = 1;
+        case 7
+            i = 3;
+        otherwise
+            disp('other value')
+    end
+    point = r + 1i * i;
+    point = point / sqrt(42);
+end
     
 end
 

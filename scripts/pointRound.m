@@ -45,5 +45,24 @@ if( strcmp(type, '16-QAM') == 1)
 point = (r + 1i * im) / sqrt(10);
 end
 
+if( strcmp(type, '64-QAM') == 1)
+    point = (2 * round((noisedPoint * sqrt(42) + 7 + 7i) / 2) - 7 - 7i);
+    
+    r = real(point);
+    if (r > 7)
+        r = 7;
+    elseif(r < -7)
+        r = -7;
+    end
+    
+    im = imag(point);
+    if (im > 7)
+        im = 7;
+    elseif(im < -7)
+        im = -7;
+    end
+point = (r + 1i * im) / sqrt(42);
+end
+
 end
 

@@ -1,12 +1,10 @@
-maxl = 2000;
-type = 'QPSK';
-Kdb = -50;
-K = 10 ^ (0.1 * Kdb);
-K = -1; %Использование модел кларка
+function [roplot, BERplot] = clarck( type, K, maxl )
+global teta;
+
 
 roplot = zeros(0);  %для построения графика
-BERplot_QPSK = zeros(0);%
-SERplot_QPSK = zeros(0);%
+BERplot = zeros(0);%
+SERplot = zeros(0);%
 
 if( strcmp(type, 'BPSK') == 1)
     symbolLength = 1;
@@ -17,11 +15,15 @@ end
 if( strcmp(type, '16-QAM') == 1)
     symbolLength = 4;
 end
+if( strcmp(type, '64-QAM') == 1)
+    symbolLength = 6;
+end
 
 romin = -10;
-romax = 35;
-for ro = romin:0.4:romax %ro - ОСШ в дб
+romax = 40;
+for ro = romin:0.8:romax %ro - ОСШ в дб
     p = 10 ^ (0.1 * ro);
+    teta = -1;
     
     BERcounter = 0;
     missBERcounter = 0;
@@ -48,8 +50,12 @@ for ro = romin:0.4:romax %ro - ОСШ в дб
     
     ro
     roplot = [roplot ro];
-    BERplot_QPSK = [BERplot_QPSK BER];
-    SERplot_QPSK = [SERplot_QPSK SER];
+    BERplot = [BERplot BER];
+    SERplot = [SERplot SER];
 end
-semilogy(roplot, BERplot_QPSK, roplot, SERplot_QPSK);
+semilogy(roplot, BERplot, roplot, SERplot);
 grid on;
+
+end
+%[roplot, BERplotm1] = clarck('QPSK', -1, 20000)
+%[roplot, BERplot] = clarck('QPSK', 0, 20000)

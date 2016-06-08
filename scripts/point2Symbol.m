@@ -25,5 +25,35 @@ if( strcmp(type, '16-QAM') == 1)
     if(abs(i) == 3) a4 = 0; else a4 = 1; end
     symbol = [a1 a2 a3 a4];
 end
+
+if( strcmp(type, '64-QAM') == 1)
+    eps = 0.001;
+    point = point * sqrt(42);
+    r = real(point);
+    i = imag(point);
+
+    if(abs(r + 7) < eps) a1=0; a2=0; a3=0; end
+    if(abs(r + 5) < eps) a1=0; a2=0; a3=1; end
+    if(abs(r + 3) < eps) a1=0; a2=1; a3=1; end
+    if(abs(r + 1) < eps) a1=0; a2=1; a3=0; end
+    if(abs(r - 1) < eps) a1=1; a2=1; a3=0; end
+    if(abs(r - 3) < eps) a1=1; a2=1; a3=1; end
+    if(abs(r - 5) < eps) a1=1; a2=0; a3=1; end
+    if(abs(r - 7) < eps) a1=1; a2=0; a3=0; end
+    
+       
+    if(abs(i + 7) < eps) a4=0; a5=0; a6=0; end
+    if(abs(i + 5) < eps) a4=0; a5=0; a6=1; end
+    if(abs(i + 3) < eps) a4=0; a5=1; a6=1; end
+    if(abs(i + 1) < eps) a4=0; a5=1; a6=0; end
+    if(abs(i - 1) < eps) a4=1; a5=1; a6=0; end
+    if(abs(i - 3) < eps) a4=1; a5=1; a6=1; end
+    if(abs(i - 5) < eps) a4=1; a5=0; a6=1; end
+    if(abs(i - 7) < eps) a4=1; a5=0; a6=0; end
+    
+    symbol = [a1 a2 a3 a4 a5 a6];
+    
+end
+
 end
 
